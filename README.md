@@ -22,25 +22,21 @@ This project models hourly summer rental demand and compares several ensemble-le
 
 
 
-The dataset comes from the UCI Machine Learning Repository and contains:
+The Seoul Bike Sharing Demand dataset contains:
 
 
 
-\- 8,760 hourly observations covering one year
+\- \*\*8,760\*\* hourly observations covering one year
 
-\- 2,208 summer observations used for modeling
+\- \*\*2,208\*\* summer observations used for modeling
 
-\- Hourly bike rental counts
+\- Hourly bicycle rental counts
 
 \- Weather and time-of-day variables
 
 
 
-The response variable is:
-
-
-
-`Rented\_Bike\_Count`
+The response variable is `Rented\_Bike\_Count`.
 
 
 
@@ -66,7 +62,11 @@ Eight quantitative predictors are used:
 
 
 
-The original response was moderately right-skewed, so the modeling workflow retained a square-root transformation. Final model performance is also reported on the original bike-count scale for interpretability.
+The modeling workflow retains a square-root transformation of the response from the original analysis. Final performance is also evaluated on the original bike-count scale for interpretability.
+
+
+
+See \[DATA.md](DATA.md) for additional dataset documentation.
 
 
 
@@ -78,31 +78,31 @@ Three ensemble regression models were evaluated:
 
 
 
-1\. \*\*Bagged Trees\*\*
+\### Bagged Trees
 
-&#x20;  - Implemented using `RandomForestRegressor`
+\- Implemented with `RandomForestRegressor`
 
-&#x20;  - All eight predictors available at each split
+\- All eight predictors available at each split
 
-&#x20;  - Number of trees tuned over 10, 100, and 1,000
-
-
-
-2\. \*\*Random Forest\*\*
-
-&#x20;  - `max\_features="sqrt"`
-
-&#x20;  - Number of trees tuned over 10, 100, and 1,000
+\- Number of trees tuned over 10, 100, and 1,000
 
 
 
-3\. \*\*Gradient Boosting\*\*
+\### Random Forest
 
-&#x20;  - Decision stumps (`max\_depth=1`)
+\- `max\_features="sqrt"`
 
-&#x20;  - Number of trees: 10, 100, 1,000
+\- Number of trees tuned over 10, 100, and 1,000
 
-&#x20;  - Learning rates: 0.001, 0.01, 0.1
+
+
+\### Gradient Boosting
+
+\- Decision stumps (`max\_depth=1`)
+
+\- Number of trees: 10, 100, 1,000
+
+\- Learning rates: 0.001, 0.01, 0.1
 
 
 
@@ -122,9 +122,9 @@ The original analysis randomly divided the 2,208 summer observations into:
 
 
 
-\- 1,104 training observations
+\- \*\*1,104 training observations\*\*
 
-\- 1,104 test observations
+\- \*\*1,104 test observations\*\*
 
 
 
@@ -140,13 +140,13 @@ To better represent future-period prediction, I added a chronological evaluation
 
 
 
-\- \*\*Training / model development:\*\* June 1 - August 8, 2018
+\- \*\*Training / model development:\*\* June 1 – August 8, 2018
 
-\- \*\*Final test period:\*\* August 9 - August 31, 2018
+\- \*\*Final test period:\*\* August 9 – August 31, 2018
 
 
 
-Hyperparameters were selected using `TimeSeriesSplit` within the earlier training period before the final temporal test period was evaluated.
+Hyperparameters were selected using `TimeSeriesSplit` within the earlier training period before evaluating the final temporal holdout.
 
 
 
@@ -162,7 +162,7 @@ Hyperparameters were selected using `TimeSeriesSplit` within the earlier trainin
 
 | --- | ---: | ---: | ---: |
 
-| Bagged Tree | \*\*191.7\*\* | \*\*291.3\*\* | \*\*0.818\*\* |
+| \*\*Bagged Tree\*\* | \*\*191.7\*\* | \*\*291.3\*\* | \*\*0.818\*\* |
 
 | Random Forest | 209.0 | 305.1 | 0.800 |
 
@@ -178,7 +178,7 @@ Hyperparameters were selected using `TimeSeriesSplit` within the earlier trainin
 
 | --- | ---: | ---: | ---: |
 
-| Bagged Tree | \*\*202.4\*\* | \*\*297.2\*\* | \*\*0.755\*\* |
+| \*\*Bagged Tree\*\* | \*\*202.4\*\* | \*\*297.2\*\* | \*\*0.755\*\* |
 
 | Random Forest | 227.7 | 312.1 | 0.730 |
 
@@ -190,7 +190,7 @@ The \*\*Bagged Tree remained the strongest model under both validation approache
 
 
 
-Performance weakened somewhat on the later temporal holdout, particularly in R², but the Bagged Tree's RMSE increased only moderately from approximately 291 to 297 bikes. This provides a more conservative estimate of performance than the random split while showing that the model retained useful predictive accuracy on a later period.
+Performance weakened somewhat on the later temporal holdout, particularly in R². However, the Bagged Tree's RMSE increased only moderately from approximately \*\*291 to 297 bikes\*\*, showing that it retained useful predictive performance on a genuinely later period.
 
 
 
@@ -202,13 +202,13 @@ Time of day was the strongest predictive feature across the fitted ensemble mode
 
 
 
-The temporal error analysis also showed that prediction errors were larger during high-demand periods:
+Temporal error analysis also showed that prediction errors were larger during high-demand periods:
 
 
 
-\- Peak-demand MAE: approximately \*\*269 bikes\*\*
+\- \*\*Peak-demand MAE:\*\* approximately 269 bikes
 
-\- Non-peak MAE: approximately \*\*180 bikes\*\*
+\- \*\*Non-peak MAE:\*\* approximately 180 bikes
 
 \- Largest average errors occurred around \*\*8:00 and 18:00\*\*
 
@@ -246,23 +246,19 @@ This is a constructed scenario intended to illustrate model behavior. It is \*\*
 
 
 
-```text
+&#x20;   seoul-bike-demand/
 
-seoul-bike-demand/
+&#x20;   ├── README.md
 
-│
+&#x20;   ├── DATA.md
 
-├── README.md
+&#x20;   ├── requirements.txt
 
-├── seoul\_bike\_demand.ipynb
+&#x20;   ├── seoul\_bike\_demand.ipynb
 
-├── SeoulBikeData.csv
+&#x20;   ├── SeoulBikeData.csv
 
-├── DATA.md
-
-├── requirements.txt
-
-└── .gitignore
+&#x20;   └── .gitignore
 
 
 
@@ -270,7 +266,7 @@ seoul-bike-demand/
 
 
 
-Python, pandas, NumPy, scikit-learn, Matplotlib
+Python · pandas · NumPy · scikit-learn · Matplotlib
 
 
 
@@ -280,9 +276,9 @@ Python, pandas, NumPy, scikit-learn, Matplotlib
 
 1\. Clone the repository.
 
-2\. Install the packages listed in requirements.txt.
+2\. Install the packages listed in `requirements.txt`.
 
-3\. Open seoul\_bike\_demand.ipynb.
+3\. Open `seoul\_bike\_demand.ipynb`.
 
-4\. Run the notebook from top to bottom with SeoulBikeData.csv in the repository root.
+4\. Run the notebook from top to bottom with `SeoulBikeData.csv` in the repository root.
 
